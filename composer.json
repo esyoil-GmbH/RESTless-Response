@@ -9,5 +9,10 @@
             "email": "bg@esyoil.com"
         }
     ],
+    "autoload": {
+      "psr-4": {
+        "\\RESTless": "src/"
+      }
+    },
     "require": {}
 }
