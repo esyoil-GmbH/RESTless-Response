@@ -29,7 +29,7 @@ class Response {
    * sets the content-type to json
    * @return Reponse self
    */
-  public function isJson(): Reponse {
+  public function isJson() {
     $this->$content_type = "json";
     header("Content-Type: application/json; charset=utf-8");
     return $this;
