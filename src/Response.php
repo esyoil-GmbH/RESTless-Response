@@ -40,7 +40,7 @@ class Response {
    * @param  string   $content content to set
    * @return Response          self
    */
-  public function content(string $content) {
+  public function content(array $content) {
     $this->content = $content;
     return $this;
   }
