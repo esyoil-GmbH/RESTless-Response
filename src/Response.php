@@ -16,7 +16,11 @@ class Response {
     }
   }
 
-  public function setStatusCode(int $code = 200): Response {
+  /**
+   * set the status code of the answer
+   * @param integer $code status code
+   */
+  public function setStatusCode(int $code = 200) {
     http_response_code($code);
     return $this;
   }
@@ -36,7 +40,7 @@ class Response {
    * @param  string   $content content to set
    * @return Response          self
    */
-  public function content(string $content): Response {
+  public function content(string $content) {
     $this->content = $content;
     return $this;
   }
