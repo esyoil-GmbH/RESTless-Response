@@ -11,7 +11,7 @@ class Response {
     if (self::$instance instanceof Response) {
       return self::$instance;
     } else {
-      self::$instance = new Reponse();
+      self::$instance = new self();
       return self::$instance;
     }
   }
