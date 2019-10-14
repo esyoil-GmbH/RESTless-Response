@@ -46,10 +46,21 @@ class Response {
   }
 
   /**
+   * set cors headers
+   *
+   * @param string $source the sources allowed
+   * @return void
+   */
+  public function cors(string $source) {
+    header("Access-Control-Allow-Origin: " . $source);
+    return $this;
+  }
+
+  /**
    * sends the output to the browser
    */
   public function send(): void {
-    switch ($this->$content_type) {
+    switch ($this->content_type) {
       case "json":
         $this->content = json_encode($this->content);
         break;
