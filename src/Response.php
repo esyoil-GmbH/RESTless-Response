@@ -30,7 +30,7 @@ class Response {
    * @return Reponse self
    */
   public function isJson() {
-    $this->$content_type = "json";
+    $this->content_type = "json";
     header("Content-Type: application/json; charset=utf-8");
     return $this;
   }
