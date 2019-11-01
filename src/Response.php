@@ -4,7 +4,11 @@ namespace RESTless;
 class Response {
 
   public static $instance;
-  private $content;
+  
+  private $content = null;
+  private $errors = null;
+  private $meta = null;
+
   private $content_type;
 
   public static function getInstance(): Response {
@@ -46,6 +50,36 @@ class Response {
   }
 
   /**
+   * Adds a meta element to the response. Can contain anthing.
+   *
+   * @param array $meta
+   * @return void
+   */
+  public function meta(array $meta) {
+    $this->meta[] = $meta;
+    return $this;
+  }
+
+  /**
+   * Adds an error to the error list
+   *
+   * @param [type] $id
+   * @param integer $status
+   * @param string $title
+   * @param string $detail
+   * @return void
+   */
+  public function error($id, $status = 400, $title = "Bad Request", $detail = "Malformed Request") {
+    $this->errors[] = [
+      'id' => $id,
+      'status' => $status,
+      'title' => $title,
+      'detail' => $detail
+    ];
+    return $this;
+  }
+
+  /**
    * set cors headers
    *
    * @param string $source the sources allowed
@@ -57,9 +91,36 @@ class Response {
   }
 
   /**
+   * builds the final array
+   *
+   * @return array
+   */
+  public function build(): array {
+
+    $final = [
+      'errors' => false,
+      'meta' => null,
+      'data' => null
+    ];
+
+    if ($this->errors) {
+      $final['errors'] = $this->errors;
+    }
+    if ($this->content) {
+      $final['data'] = $this->content;
+    }
+    if ($this->meta) {
+      $final['meta'] = $this->meta;
+    }
+
+    return $final;
+  }
+
+  /**
    * sends the output to the browser
    */
   public function send(): void {
+    $this->content = $this->build();
     switch ($this->content_type) {
       case "json":
         $this->content = json_encode($this->content);
