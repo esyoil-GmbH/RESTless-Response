@@ -88,7 +88,7 @@ class Response {
   public function cors(string $source) {
     header("Access-Control-Allow-Origin: " . $source);
     header("Access-Control-Allow-Headers: *");
-    header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PATCH");
+    header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PATCH, DELETE");
     return $this;
   }
 
