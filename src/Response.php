@@ -11,6 +11,11 @@ class Response {
 
   private $content_type;
 
+  /**
+   * Instance getter
+   *
+   * @return Response self
+   */
   public static function getInstance(): Response {
     if (self::$instance instanceof Response) {
       return self::$instance;
@@ -23,6 +28,7 @@ class Response {
   /**
    * set the status code of the answer
    * @param integer $code status code
+   * @return Reponse self
    */
   public function setStatusCode(int $code = 200) {
     http_response_code($code);
@@ -53,7 +59,7 @@ class Response {
    * Adds a meta element to the response. Can contain anthing.
    *
    * @param array $meta
-   * @return void
+   * @return Reponse self
    */
   public function meta(array $meta) {
     $this->meta[] = $meta;
@@ -67,14 +73,15 @@ class Response {
    * @param integer $status
    * @param string $title
    * @param string $detail
-   * @return void
+   * @return Reponse self
    */
-  public function error($id, $status = 400, $title = "Bad Request", $detail = "Malformed Request") {
+  public function error($id, $status = 400, $title = "Bad Request", $detail = "Malformed Request", $errorMessage = "") {
     $this->errors[] = [
       'id' => $id,
       'status' => $status,
       'title' => $title,
-      'detail' => $detail
+      'detail' => $detail,
+      'message' => $errorMessage
     ];
     return $this;
   }
@@ -83,7 +90,7 @@ class Response {
    * set cors headers
    *
    * @param string $source the sources allowed
-   * @return void
+   * @return Reponse self
    */
   public function cors(string $source) {
     header("Access-Control-Allow-Origin: " . $source);
